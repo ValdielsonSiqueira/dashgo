@@ -66,7 +66,7 @@ export default function Dashboard() {
       <Header />
       <Flex w="100%" maxWidth={1480} my="6" mx="auto" px="6">
         <Sidebar />
-        <SimpleGrid  align="flex-start" flex="1" gap="4" minChildWidth="320px">
+        <SimpleGrid  alignItems="flex-start" flex="1" gap="4" minChildWidth="320px">
           <Box
            p="8"
            bg="gray.800"

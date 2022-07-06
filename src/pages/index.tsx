@@ -19,7 +19,7 @@ export default function SignIn() {
     resolver: yupResolver(signInFormSchema)
   });
 
-  const handleSignIn: SubmitHandler<SignInFormData> =async(values) => {
+  const handleSignIn: SubmitHandler<SignInFormData> = async(values) => {
     await new Promise(resolve => setTimeout(resolve, 2000));
     console.log(values);
   }
@@ -41,8 +41,8 @@ export default function SignIn() {
           onSubmit={handleSubmit(handleSignIn)}
         >
           <Stack spacing="4">
-            <Input type="email" error={formState.errors.email} name="email" label="Email" placeholder="Insira seu email"  {...register('Email')} />
-            <Input type="password" error={formState.errors.password} name="password" label="Senha" placeholder="Insira sua senha" {...register('senha')}  />
+            <Input type="email" error={formState.errors.email} name="email" label="Email" placeholder="Insira seu email"  {...register('email')} />
+            <Input type="password" error={formState.errors.password} name="password" label="Senha" placeholder="Insira sua senha" {...register('password')}  />
             <Button type="submit" mt="6" colorScheme="pink" size="lg" isLoading={formState.isSubmitting}>
               Entrar
             </Button>

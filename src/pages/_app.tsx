@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 //   makeServer();
 // }
 
-  makeServer();
+makeServer();
 
 const queryClient = new QueryClient()
 

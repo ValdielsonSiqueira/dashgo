@@ -17,6 +17,8 @@ export default function UserList() {
       year: 'numeric',
     })}))
     return users;
+  }, {
+    staleTime: 1000 * 5,
   }) 
 
   const isWideVersion = useBreakpointValue({

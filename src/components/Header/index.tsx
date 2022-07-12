@@ -33,9 +33,7 @@ export function Header() {
           variant="unstyled"
           onClick={onOpen}
           mr="2"
-        >
-
-        </IconButton>
+        />
       )}
       <Logo />
       { isWideVersion && <SearchBox />}

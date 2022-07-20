@@ -46,7 +46,8 @@ export function makeServer() {
           {'x-total-count': String(total)},
           { users }
         )
-      });
+      });~
+      this.get('/users/:id')
       this.post('/users');
       this.namespace = '';
       this.passthrough();

@@ -1,11 +1,13 @@
-import { Box, Stack, Icon, Button,Text, Flex, Heading, Table, Thead, Th, Checkbox, Tr, Tbody, Td, useBreakpointValue, Spinner } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Stack, Icon, Button,Text, Flex, Heading, Table, Thead, Th, Checkbox, Tr, Tbody, Td, useBreakpointValue, Spinner, Link } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { RiAddLine, RiFileDownloadLine } from "react-icons/ri";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
+import { api } from "../../services/api";
 import { useUser } from "../../services/hooks/useUser";
+import { queryClient } from "../../services/queryClient";
 
 export default function UserList() {
   const [page, setPage] = useState(1);
@@ -15,6 +17,16 @@ export default function UserList() {
     base: false,
     lg: true,
   });
+
+  async function handlePrefetchUser(userId:  string) {
+    await queryClient.prefetchQuery(['user', userId], async () => {
+      const response = await api.get(`users/${userId}`);
+      
+      return response.data; 
+    }, {
+      staleTime: 1000 * 60 * 10,
+    })
+  }
 
   useEffect(() => {
     fetch('http://localhost:3000/api/users')
@@ -46,7 +58,7 @@ export default function UserList() {
                 >
                   Atualizar Lista
               </Button>
-              <Link href="/users/create" passHref>
+              <NextLink href="/users/create" passHref>
                 <Button 
                   as="a" 
                   size="sm" 
@@ -56,7 +68,7 @@ export default function UserList() {
                 >
                   Criar novo
                 </Button>
-              </Link>
+              </NextLink>
             </Stack>
           </Flex>
           { isLoading ? (
@@ -80,7 +92,7 @@ export default function UserList() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {data.users.map(({ id, name, email, createdAt}) => {
+                  {data.users.map(({ id, name, email, createdAt }) => {
                     return (
                       <Tr key={id}>
                         <Td px={["4", "4", "6"]}>
@@ -88,7 +100,9 @@ export default function UserList() {
                         </Td>
                         <Td>
                           <Box>
-                            <Text fontWeight="bold">{name}</Text>
+                            <Link color="purple.400" onMouseEnter={() => handlePrefetchUser(id)}>
+                              <Text fontWeight="bold">{name}</Text>
+                            </Link>
                             <Text fontSize="sm" color="gray.300">{email}</Text>
                           </Box>
                         </Td>

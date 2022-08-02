@@ -18,6 +18,10 @@ export default function UserList() {
     lg: true,
   });
 
+  function refetchQuery() {
+    refetch();
+  };
+
   async function handlePrefetchUser(userId:  string) {
     await queryClient.prefetchQuery(['user', userId], async () => {
       const response = await api.get(`users/${userId}`);
@@ -54,7 +58,7 @@ export default function UserList() {
                   fontSize="sm" 
                   colorScheme="pink"
                   leftIcon={<Icon as={RiFileDownloadLine} fontSize="20" />}
-                  onClick={refetch}
+                  onClick={refetchQuery}
                 >
                   Atualizar Lista
               </Button>

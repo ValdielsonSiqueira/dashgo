@@ -1,7 +1,11 @@
+
 import { Box, Flex, SimpleGrid, Text, theme } from "@chakra-ui/react";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 import dynamic from "next/dynamic";
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+
 
 const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false
@@ -9,6 +13,7 @@ const Chart = dynamic(() => import("react-apexcharts"), {
 
 
 export default function Dashboard() {
+  const {user } = useContext(AuthContext);
   const options = {
     chart: {
       toolbar: {
@@ -67,6 +72,7 @@ export default function Dashboard() {
       <Flex w="100%" maxWidth={1480} my="6" mx="auto" px="6">
         <Sidebar />
         <SimpleGrid  alignItems="flex-start" flex="1" gap="4" minChildWidth="320px">
+          {user?.email}
           <Box
            p={["6", "8"]}
            bg="gray.800"
@@ -84,7 +90,6 @@ export default function Dashboard() {
             <Text fontSize="lg" mb="4">Taxa de abertura</Text>
             <Chart options={options} series={series} type="area" height="160" />
           </Box>
-
         </SimpleGrid>
       </Flex>
     </Flex>

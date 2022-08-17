@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { api2 } from "../services/api";
 import Router from 'next/router';
+import { setCookie } from 'nookies';
 
 type User =  {
   email: string;
@@ -38,6 +39,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }); 
 
       const { token, refreshToken, permissions, roles } = response.data;
+
+      setCookie(undefined, 'dashgo.token', token, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: '/'
+      });
+      setCookie(undefined, 'dashgo.refreshToken', refreshToken, {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: '/'
+      });
       
       setUser({
         email, 
